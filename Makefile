@@ -12,10 +12,10 @@ vet: ## Run the vet tool
 	go vet $(shell go list ./... | grep -v /vendor/)
 
 clean: ## Clean up build artifacts
-	go clean
+	# go clean
 	rm -f budget2sheets budget2sheets.zip
 
-build: test ## Build the executable
+build: clean test ## Build the executable
 	GOOS=linux GOARCH=amd64 go build -o budget2sheets ./cmd/budget2sheets
 
 zip: build ## Zip the executable so that it can be uploaded to AWS Lambda
