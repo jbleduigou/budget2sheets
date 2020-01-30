@@ -7,32 +7,41 @@ The transform part is performed by **budgetcategorizer** and has two main respon
 The load part is performed by **budget2sheets** which is going to upload the transactions (i.e. expenses) to Google Sheets.
 
 ## Overall Architecture
+
 ![Architecture Diagram](architecture_diagram.png)
 
 ## Getting Started
 
 Clone the repo inside the following directory:
-```
+
+```bash
 ~/go/src/github.com/jbleduigou/
 
 ```
+
 If you want to fork the repo, replace the latest path element with your GitHub handle.
 
 ### Prerequisites
+
 You will need to have Go installed on your machine.  
 Currently the project uses version 1.13
 
 ### Building
 You will find a Makefile at the root of the project.  
 To run the full build and have zip file ready for AWS Lambda use:
-```
+
+```bash
 make zip
 ```
+
 If you only want to run the unit tests:
-```
+
+```bash
 make test
 ```
+
 ## Deployment
+
 For now deployment is made manually.  
 It would be nice to have a cloudformation template at some point.
 
@@ -82,6 +91,7 @@ Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduc
 See also the list of [contributors](https://github.com/jbleduigou/budget2sheets/contributors) who participated in this project.
 
 ## License
+
 Licensed under the Apache License, Version 2.0.  
 See [LICENSE.txt](LICENSE.txt) for more details.  
 Copyright 2020 Jean-Baptiste Le Duigou
