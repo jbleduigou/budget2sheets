@@ -14,7 +14,7 @@ var category = "<category/>"
 var value = "-13.37"
 var invalidValue = "trash"
 
-func TestReadCorrectMessage(t *testing.T) {
+func TestReadAttributesBeingPopulated(t *testing.T) {
 	var messagetests = []struct {
 		sqsDate        *string
 		sqsDescription *string
@@ -58,5 +58,23 @@ func TestReadCorrectMessage(t *testing.T) {
 		assert.Equal(t, result.Category, v.category)
 		assert.Equal(t, result.Value, v.value)
 	}
+
+}
+
+func TestReadAttributesNotBeingPopulated(t *testing.T) {
+	r := NewReader()
+
+	m := events.SQSMessage{
+		MessageId:         "ID",
+		MessageAttributes: make(map[string]events.SQSMessageAttribute),
+	}
+
+	result, _ := r.Read(m)
+
+	assert.Equal(t, result.Date, "")
+	assert.Equal(t, result.Description, "")
+	assert.Equal(t, result.Comment, "")
+	assert.Equal(t, result.Category, "")
+	assert.Equal(t, result.Value, 0.0)
 
 }
