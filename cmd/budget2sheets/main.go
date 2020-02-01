@@ -1,15 +1,15 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"net/http"
-	"strconv"
 
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
+	budget "github.com/jbleduigou/budget2sheets"
 	"github.com/jbleduigou/budget2sheets/authentication"
 	"github.com/jbleduigou/budget2sheets/config"
+	"github.com/jbleduigou/budget2sheets/reader"
 	"golang.org/x/net/context"
 	"golang.org/x/oauth2/google"
 	"google.golang.org/api/sheets/v4"
@@ -25,6 +25,7 @@ func getClient() (*http.Client, error) {
 
 func handler(ctx context.Context, event events.SQSEvent) {
 	config := config.NewConfiguration()
+	reader := reader.NewReader()
 	client, err := getClient()
 
 	srv, err := sheets.New(client)
@@ -33,7 +34,8 @@ func handler(ctx context.Context, event events.SQSEvent) {
 	}
 
 	for _, record := range event.Records {
-		vr, _ := extractData(record)
+		t, _ := reader.Read(record)
+		vr, _ := asValueRange(t)
 		_, err = srv.Spreadsheets.Values.Append(config.GetSpreadSheetID(), config.GetWriteRange(), &vr).ValueInputOption("USER_ENTERED").InsertDataOption("INSERT_ROWS").Do()
 		if err != nil {
 			log.Fatalf("Unable to retrieve data from sheet. %v", err)
@@ -41,14 +43,10 @@ func handler(ctx context.Context, event events.SQSEvent) {
 	}
 }
 
-func extractData(m events.SQSMessage) (sheets.ValueRange, error) {
-	fmt.Printf("Processing SQS message with id '%v'\n", m.MessageId)
+func asValueRange(t budget.Transaction) (sheets.ValueRange, error) {
 	var vr sheets.ValueRange
-	euro, _ := strconv.ParseFloat(*m.MessageAttributes["Value"].StringValue, 64)
-	description := *m.MessageAttributes["Description"].StringValue
-	myval := []interface{}{*m.MessageAttributes["Date"].StringValue, description, "", *m.MessageAttributes["Category"].StringValue, euro}
+	myval := []interface{}{t.Date, t.Description, t.Comment, t.Category, t.Value}
 	vr.Values = append(vr.Values, myval)
-	fmt.Printf("Description of transaction is '%v'\n", description)
 	return vr, nil
 }
 
