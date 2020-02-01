@@ -8,10 +8,12 @@ import (
 	budget "github.com/jbleduigou/budget2sheets"
 )
 
+// Reader is a interface for reading a message in SQS and converting in to Transaction
 type Reader interface {
 	Read(m events.SQSMessage) (budget.Transaction, error)
 }
 
+// NewReader returns an instances of a reader, actual implementation is not exposed
 func NewReader() Reader {
 	return &sqsReader{}
 }

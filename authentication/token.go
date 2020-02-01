@@ -9,6 +9,7 @@ import (
 	"golang.org/x/oauth2"
 )
 
+// GetToken returns an oauth2 token for Google APIs
 func GetToken() *oauth2.Token {
 	tok := &oauth2.Token{}
 	accessToken64, ok := os.LookupEnv("GOOGLE_ACCESS_TOKEN")
