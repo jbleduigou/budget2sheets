@@ -35,14 +35,10 @@ func handler(ctx context.Context, event events.SQSEvent) {
 
 	writer := writer.NewWriter(srv, config.GetSpreadSheetID(), config.GetWriteRange())
 
+	cmd := command{r: reader, w: writer}
+
 	for _, record := range event.Records {
-		// Read Transaction from SQS event
-		t, err := reader.Read(record)
-		// Write Transaction to Google Sheets
-		err = writer.Write(t)
-		if err != nil {
-			log.Fatalf("Unable to send data to Google Sheets. %v", err)
-		}
+		cmd.execute(record)
 	}
 }
 

@@ -5,13 +5,14 @@ go 1.13
 require (
 	cloud.google.com/go v0.52.0 // indirect
 	github.com/aws/aws-lambda-go v1.13.3
+	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/golang/groupcache v0.0.0-20200121045136-8c9f03a8e57e // indirect
-	github.com/golang/protobuf v1.3.3 // indirect
 	github.com/stretchr/testify v1.4.0
-	golang.org/x/net v0.0.0-20200114155413-6afb5195e5aa
+	go.opencensus.io v0.22.3 // indirect
+	golang.org/x/net v0.0.0-20200202094626-16171245cfb2
 	golang.org/x/oauth2 v0.0.0-20200107190931-bf48bf16ab8d
-	golang.org/x/sys v0.0.0-20200124204421-9fbb57f87de9 // indirect
-	google.golang.org/api v0.15.0
-	google.golang.org/genproto v0.0.0-20200128133413-58ce757ed39b // indirect
-	google.golang.org/grpc v1.27.0 // indirect
+	golang.org/x/sys v0.0.0-20200202164722-d101bd2416d5 // indirect
+	google.golang.org/api v0.16.0
+	google.golang.org/genproto v0.0.0-20200205142000-a86caf926a67 // indirect
+	gopkg.in/yaml.v2 v2.2.8 // indirect
 )
