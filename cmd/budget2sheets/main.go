@@ -38,7 +38,10 @@ func handler(ctx context.Context, event events.SQSEvent) {
 	cmd := command{r: reader, w: writer}
 
 	for _, record := range event.Records {
-		cmd.execute(record)
+		err = cmd.process(record)
+		if err != nil {
+			log.Fatalf("Error while processing SQS message: %v", err)
+		}
 	}
 }
 
