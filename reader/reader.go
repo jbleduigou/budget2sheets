@@ -27,6 +27,7 @@ func (r *sqsReader) Read(m events.SQSMessage) (budget.Transaction, error) {
 	var t budget.Transaction
 	err := json.Unmarshal([]byte(m.Body), &t)
 	if err == nil {
+		fmt.Printf("Successfully read json payload for message with id '%v'\n", m.MessageId)
 		return t, err
 	}
 	euro, err := strconv.ParseFloat(r.getAttributeValue(m, "Value"), 64)
