@@ -1,6 +1,7 @@
 package reader
 
 import (
+	"encoding/json"
 	"fmt"
 	"strconv"
 
@@ -23,6 +24,11 @@ type sqsReader struct {
 
 func (r *sqsReader) Read(m events.SQSMessage) (budget.Transaction, error) {
 	fmt.Printf("Processing SQS message with id '%v'\n", m.MessageId)
+	var t budget.Transaction
+	err := json.Unmarshal([]byte(m.Body), &t)
+	if err == nil {
+		return t, err
+	}
 	euro, err := strconv.ParseFloat(r.getAttributeValue(m, "Value"), 64)
 	if err != nil {
 		fmt.Printf("Error while parsing transaction value: %v\n", err)
