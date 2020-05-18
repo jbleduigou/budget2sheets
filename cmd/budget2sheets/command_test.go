@@ -12,21 +12,18 @@ import (
 )
 
 func getMessage() events.SQSMessage {
-	date := "01/01/2020"
-	description := "<description/>"
-	comment := "<comment/>"
-	category := "<category/>"
-	value := "13.37"
-
 	m := events.SQSMessage{
-		MessageId:         "ID",
-		MessageAttributes: make(map[string]events.SQSMessageAttribute),
+		MessageId: "ID",
+		Body: `
+		{
+			"Date": "01/01/2020", 
+			"Description": "<description/>",
+			"Comment": "<comment/>",
+			"Category": "<category/>",
+			"Value": 13.37
+		}
+		`,
 	}
-	m.MessageAttributes["Date"] = events.SQSMessageAttribute{StringValue: &date}
-	m.MessageAttributes["Description"] = events.SQSMessageAttribute{StringValue: &description}
-	m.MessageAttributes["Comment"] = events.SQSMessageAttribute{StringValue: &comment}
-	m.MessageAttributes["Category"] = events.SQSMessageAttribute{StringValue: &category}
-	m.MessageAttributes["Value"] = events.SQSMessageAttribute{StringValue: &value}
 
 	return m
 }
