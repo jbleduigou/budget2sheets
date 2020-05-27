@@ -1,6 +1,6 @@
 module github.com/jbleduigou/budget2sheets
 
-go 1.13
+go 1.14
 
 require (
 	cloud.google.com/go v0.52.0 // indirect
