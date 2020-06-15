@@ -1,5 +1,6 @@
 # Budget 2 Sheets
 ![Go](https://github.com/jbleduigou/budget2sheets/workflows/Go/badge.svg)
+[![Go Report Card](https://goreportcard.com/badge/github.com/jbleduigou/budget2sheets)](https://goreportcard.com/report/github.com/jbleduigou/budget2sheets)
 [![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=jbleduigou/budget2sheets)](https://dependabot.com)
 
 
