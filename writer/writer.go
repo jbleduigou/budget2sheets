@@ -1,9 +1,8 @@
 package writer
 
 import (
-	"fmt"
-
 	budget "github.com/jbleduigou/budget2sheets"
+	"go.uber.org/zap"
 	"google.golang.org/api/sheets/v4"
 )
 
@@ -13,20 +12,22 @@ type Writer interface {
 }
 
 // NewWriter returns an instances of a writer, actual implementation is not exposed
-func NewWriter(srv *sheets.Service, spreadSheetID string, writeRange string) Writer {
-	return &sheetsWriter{srv: srv, spreadSheetID: spreadSheetID, writeRange: writeRange}
+func NewWriter(srv *sheets.Service, spreadSheetID string, writeRange string, logger *zap.SugaredLogger) Writer {
+	return &sheetsWriter{srv: srv, spreadSheetID: spreadSheetID, writeRange: writeRange, logger: logger}
 }
 
 type sheetsWriter struct {
 	srv           *sheets.Service
 	spreadSheetID string
 	writeRange    string
+	logger        *zap.SugaredLogger
 }
 
 func (w *sheetsWriter) Write(t budget.Transaction) error {
-	fmt.Printf("Processing SQS message with id '%v'\n", t.Date)
+	w.logger.Infof("Processing SQS message with id '%v'", t.Date)
 	vr, _ := asValueRange(t)
 	_, err := w.srv.Spreadsheets.Values.Append(w.spreadSheetID, w.writeRange, &vr).ValueInputOption("USER_ENTERED").InsertDataOption("INSERT_ROWS").Do()
+	w.logger.Infof("Processed SQS message with id '%v'", t.Date)
 	return err
 }
 
