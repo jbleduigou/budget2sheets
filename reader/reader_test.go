@@ -5,12 +5,10 @@ import (
 
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/stretchr/testify/assert"
-	"go.uber.org/zap"
 )
 
 func TestReadUsingJsonBody(t *testing.T) {
-	logger, _ := zap.NewProduction()
-	r := NewReader(logger.Sugar())
+	r := NewReader()
 
 	m := events.SQSMessage{
 		MessageId: "ID",
@@ -36,8 +34,7 @@ func TestReadUsingJsonBody(t *testing.T) {
 }
 
 func TestReadUsingJsonBodyInvalidFormat(t *testing.T) {
-	logger, _ := zap.NewProduction()
-	r := NewReader(logger.Sugar())
+	r := NewReader()
 
 	m := events.SQSMessage{
 		MessageId: "ID",

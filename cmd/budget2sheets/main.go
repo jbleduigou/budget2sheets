@@ -27,37 +27,36 @@ func getClient() (*http.Client, error) {
 }
 
 func handler(ctx context.Context, event events.SQSEvent) {
-	logger := getLogger(ctx)
-	defer logger.Sync()
+	initLogger(ctx)
 
-	logger.Info("Reading configuration")
+	zap.S().Info("Reading configuration")
 	config := config.NewConfiguration()
-	logger.Info("Creating reader")
-	reader := reader.NewReader(logger)
-	logger.Info("Getting Google Sheets client")
+	zap.S().Info("Creating reader")
+	reader := reader.NewReader()
+	zap.S().Info("Getting Google Sheets client")
 	client, err := getClient()
 
 	srv, err := sheets.New(client)
 	if err != nil {
-		logger.Error("Unable to retrieve Google Sheets client", zap.Error(err))
+		zap.S().Error("Unable to retrieve Google Sheets client", zap.Error(err))
 		os.Exit(1)
 	}
-	logger.Info("Created Google Sheets client with success")
+	zap.S().Info("Created Google Sheets client with success")
 
-	writer := writer.NewWriter(srv, config.GetSpreadSheetID(), config.GetWriteRange(), logger)
+	writer := writer.NewWriter(srv, config.GetSpreadSheetID(), config.GetWriteRange())
 
 	cmd := command{r: reader, w: writer}
 
 	for _, record := range event.Records {
 		err = cmd.process(record)
 		if err != nil {
-			logger.Error("Error while processing SQS message", zap.Error(err))
+			zap.S().Error("Error while processing SQS message", zap.Error(err))
 			os.Exit(1)
 		}
 	}
 }
 
-func getLogger(ctx context.Context) *zap.SugaredLogger {
+func initLogger(ctx context.Context) {
 	// Retrieve AWS Request ID
 	lc, _ := lambdacontext.FromContext(ctx)
 	requestID := lc.AwsRequestID
@@ -81,7 +80,8 @@ func getLogger(ctx context.Context) *zap.SugaredLogger {
 		},
 	}
 	logger, _ := cfg.Build()
-	return logger.Sugar()
+	defer zap.S().Sync()
+	zap.ReplaceGlobals(logger)
 }
 
 func main() {
