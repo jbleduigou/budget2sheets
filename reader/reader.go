@@ -14,18 +14,17 @@ type Reader interface {
 }
 
 // NewReader returns an instances of a reader, actual implementation is not exposed
-func NewReader(logger *zap.SugaredLogger) Reader {
-	return &sqsReader{logger: logger}
+func NewReader() Reader {
+	return &sqsReader{}
 }
 
 type sqsReader struct {
-	logger *zap.SugaredLogger
 }
 
 func (r *sqsReader) Read(m events.SQSMessage) (budget.Transaction, error) {
-	r.logger.Infof("Processing SQS message with id '%v'", m.MessageId)
+	zap.S().Infof("Processing SQS message with id '%v'", m.MessageId)
 	var t budget.Transaction
 	err := json.Unmarshal([]byte(m.Body), &t)
-	r.logger.Infof("Processed SQS message with id '%v'", m.MessageId)
+	zap.S().Infof("Processed SQS message with id '%v'", m.MessageId)
 	return t, err
 }
