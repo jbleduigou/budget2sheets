@@ -9,5 +9,5 @@ require (
 	go.uber.org/zap v1.20.0
 	golang.org/x/net v0.0.0-20210503060351-7fd8e65b6420
 	golang.org/x/oauth2 v0.0.0-20211104180415-d3ed0bb246c8
-	google.golang.org/api v0.66.0
+	google.golang.org/api v0.67.0
 )
