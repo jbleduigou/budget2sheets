@@ -3,7 +3,7 @@ module github.com/jbleduigou/budget2sheets
 go 1.15
 
 require (
-	github.com/aws/aws-lambda-go v1.27.1
+	github.com/aws/aws-lambda-go v1.28.0
 	github.com/stretchr/objx v0.3.0 // indirect
 	github.com/stretchr/testify v1.7.0
 	go.uber.org/zap v1.20.0
