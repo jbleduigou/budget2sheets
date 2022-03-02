@@ -18,6 +18,6 @@ func (c *command) process(m events.SQSMessage) error {
 		return err
 	}
 	// Write Transaction to Google Sheets
-	err = c.w.Write(t)
+	err = c.w.Write(t, m.MessageId)
 	return err
 }

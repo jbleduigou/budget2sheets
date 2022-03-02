@@ -8,7 +8,7 @@ import (
 
 // Writer is a interface for writing a Transaction objects to Google Sheets
 type Writer interface {
-	Write(t budget.Transaction) error
+	Write(t budget.Transaction, messageId string) error
 }
 
 // NewWriter returns an instances of a writer, actual implementation is not exposed
@@ -22,11 +22,13 @@ type sheetsWriter struct {
 	writeRange    string
 }
 
-func (w *sheetsWriter) Write(t budget.Transaction) error {
-	zap.S().Infof("Processing SQS message with id '%v'", t.Date)
+func (w *sheetsWriter) Write(t budget.Transaction, messageId string) error {
+	zap.L().Info("Processing SQS message",
+		zap.String("message-id", messageId))
 	vr, _ := asValueRange(t)
 	_, err := w.srv.Spreadsheets.Values.Append(w.spreadSheetID, w.writeRange, &vr).ValueInputOption("USER_ENTERED").InsertDataOption("INSERT_ROWS").Do()
-	zap.S().Infof("Processed SQS message with id '%v'", t.Date)
+	zap.L().Info("Successfully processed SQS message",
+		zap.String("message-id", messageId))
 	return err
 }
 
