@@ -22,9 +22,11 @@ type sqsReader struct {
 }
 
 func (r *sqsReader) Read(m events.SQSMessage) (budget.Transaction, error) {
-	zap.S().Infof("Processing SQS message with id '%v'", m.MessageId)
+	zap.L().Info("Processing SQS message",
+		zap.String("message-id", m.MessageId))
 	var t budget.Transaction
 	err := json.Unmarshal([]byte(m.Body), &t)
-	zap.S().Infof("Processed SQS message with id '%v'", m.MessageId)
+	zap.L().Info("Successfully processed SQS message",
+		zap.String("message-id", m.MessageId))
 	return t, err
 }

@@ -30,7 +30,7 @@ func getMessage() events.SQSMessage {
 
 func TestProcessWithSuccess(t *testing.T) {
 	w := mock.NewWriter()
-	w.On("Write", budget.NewTransaction("01/01/2020", "<description/>", "<comment/>", "<category/>", 13.37)).Return(nil)
+	w.On("Write", budget.NewTransaction("01/01/2020", "<description/>", "<comment/>", "<category/>", 13.37), "ID").Return(nil)
 
 	cmd := command{r: reader.NewReader(), w: w}
 
@@ -54,7 +54,7 @@ func TestProcessWithReaderError(t *testing.T) {
 
 func TestProcessWithWriterError(t *testing.T) {
 	w := mock.NewWriter()
-	w.On("Write", budget.NewTransaction("01/01/2020", "<description/>", "<comment/>", "<category/>", 13.37)).Return(fmt.Errorf("error for unit test"))
+	w.On("Write", budget.NewTransaction("01/01/2020", "<description/>", "<comment/>", "<category/>", 13.37), "ID").Return(fmt.Errorf("error for unit test"))
 
 	cmd := command{r: reader.NewReader(), w: w}
 
