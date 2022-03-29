@@ -61,6 +61,13 @@ Resources:
                         - !Ref InputQueueName
             BatchSize: 5     
 
+  LambdaLogGroup:
+    Type: AWS::Logs::LogGroup
+    DependsOn: [ Budget2SheetsFunction ] 
+    Properties:
+        RetentionInDays: 3
+        LogGroupName: !Join ['', ['/aws/lambda/', !Ref Budget2SheetsFunction]]
+
 Outputs:
   Budget2SheetsFunction:
     Description: "Budget 2Sheets Lambda Function ARN"
