@@ -8,7 +8,7 @@ require (
 	go.uber.org/zap v1.24.0
 	golang.org/x/net v0.11.0
 	golang.org/x/oauth2 v0.9.0
-	google.golang.org/api v0.127.0
+	google.golang.org/api v0.128.0
 )
 
 require (
