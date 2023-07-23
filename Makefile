@@ -25,3 +25,8 @@ help: ## Display this help message
 	@cat $(MAKEFILE_LIST) | grep -e "^[a-zA-Z_\-]*: *.*## *" | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
 .SILENT: zip build test lint vet clean help
+
+build-Budget2SheetsFunction:
+	go get -v -t -d ./...
+	GOARCH=arm64 GOOS=linux CGO_ENABLED=0 go build -o ./cmd/budget2sheets/bootstrap ./cmd/budget2sheets
+	cp ./cmd/budget2sheets/bootstrap $(ARTIFACTS_DIR)/bootstrap
