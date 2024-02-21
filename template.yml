@@ -6,15 +6,7 @@ Description: >
   SAM Template for budget2sheets app
 
 Parameters:
-  GoogleAccessToken:
-    Type: String
-  GoogleClientId:
-    Type: String
-  GoogleClientSecret:
-    Type: String
-  GoogleProjectId:
-    Type: String
-  GoogleRefreshToken:
+  GoogleCredentialsSecretARN:
     Type: String
   GoogleSpreadsheetId:
     Type: String
@@ -42,13 +34,15 @@ Resources:
       Tracing: Active # https://docs.aws.amazon.com/lambda/latest/dg/lambda-x-ray.html
       Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
         Variables:
-          GOOGLE_ACCESS_TOKEN: !Ref GoogleAccessToken
-          GOOGLE_CLIENT_ID: !Ref GoogleClientId
-          GOOGLE_CLIENT_SECRET: !Ref GoogleClientSecret
-          GOOGLE_PROJECT_ID: !Ref GoogleProjectId
-          GOOGLE_REFRESH_TOKEN: !Ref GoogleRefreshToken
+          GOOGLE_CREDENTIALS_SECRET_ARN: !Ref GoogleCredentialsSecretARN
           GOOGLE_SPREADSHEET_ID: !Ref GoogleSpreadsheetId
           GOOGLE_SPREADSHEET_RANGE: !Ref GoogleSpreadsheetRange
+      Policies:
+      - Statement:
+          - Effect: Allow
+            Action:
+              - secretsmanager:GetSecretValue
+            Resource: !Ref GoogleCredentialsSecretARN
       Events:
         MySQSEvent:
           Type: SQS
@@ -61,7 +55,7 @@ Resources:
                         - !Ref 'AWS::AccountId'
                         - ':'
                         - !Ref InputQueueName
-            BatchSize: 5     
+            BatchSize: 5
 
   LambdaLogGroup:
     Type: AWS::Logs::LogGroup

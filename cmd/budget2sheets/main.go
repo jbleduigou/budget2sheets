@@ -7,7 +7,6 @@ import (
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
 	"github.com/aws/aws-lambda-go/lambdacontext"
-	"github.com/jbleduigou/budget2sheets/authentication"
 	"github.com/jbleduigou/budget2sheets/config"
 	"github.com/jbleduigou/budget2sheets/reader"
 	"github.com/jbleduigou/budget2sheets/writer"
@@ -15,28 +14,33 @@ import (
 	"go.uber.org/zap/zapcore"
 	"golang.org/x/net/context"
 	"golang.org/x/oauth2/google"
+	"google.golang.org/api/option"
 	"google.golang.org/api/sheets/v4"
 )
 
-func getClient() (*http.Client, error) {
-	oauth2, err := google.ConfigFromJSON([]byte(authentication.GetCredentials()), "https://www.googleapis.com/auth/spreadsheets")
+func getClient(ctx context.Context, cfg config.Configuration) (*http.Client, error) {
+	jsonCfg, err := google.JWTConfigFromJSON(cfg.GetGoogleJsonCredentials(), sheets.SpreadsheetsScope)
 	if err != nil {
 		return nil, err
 	}
-	return oauth2.Client(context.Background(), authentication.GetToken()), nil
+	return jsonCfg.Client(ctx), nil
 }
 
 func handler(ctx context.Context, event events.SQSEvent) {
 	initLogger(ctx)
 
 	zap.S().Info("Reading configuration")
-	config := config.NewConfiguration()
+	config, err := config.NewConfiguration(ctx)
+	if err != nil {
+		zap.S().Error("Unable to retrieve configuration", zap.Error(err))
+		os.Exit(1)
+	}
 	zap.S().Info("Creating reader")
 	reader := reader.NewReader()
 	zap.S().Info("Getting Google Sheets client")
-	client, err := getClient()
+	client, err := getClient(ctx, config)
 
-	srv, err := sheets.New(client)
+	srv, err := sheets.NewService(ctx, option.WithHTTPClient(client))
 	if err != nil {
 		zap.S().Error("Unable to retrieve Google Sheets client", zap.Error(err))
 		os.Exit(1)
