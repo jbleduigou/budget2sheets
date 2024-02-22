@@ -59,7 +59,11 @@ func retrieveCredentialsFromSecret(ctx context.Context, svc SecretsManager) ([]b
 		zap.String("secret-arn", arn))
 	result, err := svc.GetSecretValue(ctx, input)
 
-	return []byte(*result.SecretString), err
+	if err != nil {
+		return nil, err
+	}
+
+	return []byte(*result.SecretString), nil
 }
 
 type configuration struct {
