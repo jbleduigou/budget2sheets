@@ -6,6 +6,7 @@ import (
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/config"
 	"github.com/aws/aws-sdk-go-v2/service/secretsmanager"
+	"github.com/jbleduigou/budget2sheets/iface"
 	"go.uber.org/zap"
 	"golang.org/x/net/context"
 )
@@ -15,10 +16,6 @@ type Configuration interface {
 	GetSpreadSheetID() string
 	GetWriteRange() string
 	GetGoogleJsonCredentials() []byte
-}
-
-type SecretsManager interface {
-	GetSecretValue(ctx context.Context, params *secretsmanager.GetSecretValueInput, optFns ...func(*secretsmanager.Options)) (*secretsmanager.GetSecretValueOutput, error)
 }
 
 // NewConfiguration will provide an instance of a Configuration, implementation is not exposed
@@ -40,7 +37,7 @@ func NewConfiguration(ctx context.Context) (Configuration, error) {
 	}, nil
 }
 
-func initSecretsManagerClient(ctx context.Context) (SecretsManager, error) {
+func initSecretsManagerClient(ctx context.Context) (*secretsmanager.Client, error) {
 	zap.L().Info("Creating Secrets Manager client")
 	awsCfg, err := config.LoadDefaultConfig(ctx)
 	if err != nil {
@@ -50,7 +47,7 @@ func initSecretsManagerClient(ctx context.Context) (SecretsManager, error) {
 	return svc, nil
 }
 
-func retrieveCredentialsFromSecret(ctx context.Context, svc SecretsManager) ([]byte, error) {
+func retrieveCredentialsFromSecret(ctx context.Context, svc iface.SecretsManager) ([]byte, error) {
 	arn := os.Getenv("GOOGLE_CREDENTIALS_SECRET_ARN")
 	input := &secretsmanager.GetSecretValueInput{
 		SecretId: aws.String(arn),
