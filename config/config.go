@@ -1,13 +1,13 @@
 package config
 
 import (
+	"log/slog"
 	"os"
 
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/config"
 	"github.com/aws/aws-sdk-go-v2/service/secretsmanager"
 	"github.com/jbleduigou/budget2sheets/iface"
-	"go.uber.org/zap"
 	"golang.org/x/net/context"
 )
 
@@ -38,7 +38,7 @@ func NewConfiguration(ctx context.Context) (Configuration, error) {
 }
 
 func initSecretsManagerClient(ctx context.Context) (*secretsmanager.Client, error) {
-	zap.L().Info("Creating Secrets Manager client")
+	slog.Info("Creating Secrets Manager client")
 	awsCfg, err := config.LoadDefaultConfig(ctx)
 	if err != nil {
 		return nil, err
@@ -52,8 +52,8 @@ func retrieveCredentialsFromSecret(ctx context.Context, svc iface.SecretsManager
 	input := &secretsmanager.GetSecretValueInput{
 		SecretId: aws.String(arn),
 	}
-	zap.L().Info("Retrieving secret",
-		zap.String("secret-arn", arn))
+	slog.Info("Retrieving secret",
+		slog.String("secret-arn", arn))
 	result, err := svc.GetSecretValue(ctx, input)
 
 	if err != nil {
@@ -78,5 +78,5 @@ func (c *configuration) GetWriteRange() string {
 }
 
 func (c *configuration) GetGoogleJsonCredentials() []byte {
-	return c.googleJsonCredentials 
+	return c.googleJsonCredentials
 }

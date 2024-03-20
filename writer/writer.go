@@ -1,8 +1,9 @@
 package writer
 
 import (
+	"log/slog"
+
 	budget "github.com/jbleduigou/budget2sheets"
-	"go.uber.org/zap"
 	"google.golang.org/api/sheets/v4"
 )
 
@@ -23,12 +24,12 @@ type sheetsWriter struct {
 }
 
 func (w *sheetsWriter) Write(t budget.Transaction, messageId string) error {
-	zap.L().Info("Processing SQS message",
-		zap.String("message-id", messageId))
+	slog.Info("Processing SQS message",
+		slog.String("message-id", messageId))
 	vr, _ := asValueRange(t)
 	_, err := w.srv.Spreadsheets.Values.Append(w.spreadSheetID, w.writeRange, &vr).ValueInputOption("USER_ENTERED").InsertDataOption("INSERT_ROWS").Do()
-	zap.L().Info("Successfully processed SQS message",
-		zap.String("message-id", messageId))
+	slog.Info("Successfully processed SQS message",
+		slog.String("message-id", messageId))
 	return err
 }
 
