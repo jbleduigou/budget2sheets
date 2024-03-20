@@ -3,13 +3,13 @@ module github.com/jbleduigou/budget2sheets
 go 1.22
 
 require (
-	github.com/aws/aws-lambda-go v1.41.0
+	github.com/aws/aws-lambda-go v1.46.0
 	github.com/aws/aws-sdk-go-v2 v1.26.0
 	github.com/aws/aws-sdk-go-v2/config v1.27.8
 	github.com/aws/aws-sdk-go-v2/service/secretsmanager v1.28.4
 	github.com/aws/smithy-go v1.20.1
+	github.com/jbleduigou/slog-aws-lambda v0.1.0
 	github.com/stretchr/testify v1.9.0
-	go.uber.org/zap v1.27.0
 	golang.org/x/net v0.22.0
 	golang.org/x/oauth2 v0.18.0
 	google.golang.org/api v0.170.0
@@ -45,7 +45,6 @@ require (
 	go.opentelemetry.io/otel v1.24.0 // indirect
 	go.opentelemetry.io/otel/metric v1.24.0 // indirect
 	go.opentelemetry.io/otel/trace v1.24.0 // indirect
-	go.uber.org/multierr v1.10.0 // indirect
 	golang.org/x/crypto v0.21.0 // indirect
 	golang.org/x/sys v0.18.0 // indirect
 	golang.org/x/text v0.14.0 // indirect
