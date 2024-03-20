@@ -24,6 +24,11 @@ jobs:
             dep ensure
         fi
 
+    - name: golangci-lint
+      uses: golangci/golangci-lint-action@v4
+      with:
+        args: --timeout 120s 
+
     - name: Build
       run: make zip
 
