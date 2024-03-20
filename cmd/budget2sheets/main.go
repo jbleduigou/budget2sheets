@@ -38,8 +38,11 @@ func handler(ctx context.Context, event events.SQSEvent) {
 	zap.S().Info("Creating reader")
 	reader := reader.NewReader()
 	zap.S().Info("Getting Google Sheets client")
-	client, err := getClient(ctx, config)
-
+	client, err := getClient(ctx, config)	
+	if err != nil {
+		zap.S().Error("Unable to retrieve Google Sheets client", zap.Error(err))
+		os.Exit(1)
+	}
 	srv, err := sheets.NewService(ctx, option.WithHTTPClient(client))
 	if err != nil {
 		zap.S().Error("Unable to retrieve Google Sheets client", zap.Error(err))
@@ -84,7 +87,13 @@ func initLogger(ctx context.Context) {
 		},
 	}
 	logger, _ := cfg.Build()
-	defer zap.S().Sync()
+
+	defer func() {
+		err := zap.S().Sync()
+		if err != nil {
+			logger.Error("error while flushing the zap buffers", zap.Error(err))
+		}
+	}()
 	zap.ReplaceGlobals(logger)
 }
 
