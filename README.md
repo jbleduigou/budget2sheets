@@ -46,8 +46,13 @@ make test
 
 ## Deployment
 
-For now deployment is made manually.  
-It would be nice to have a cloudformation template at some point.
+This project uses [SAM](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/what-is-sam.html) as an Infrastructure As Code tool.  
+To deploy this project run the following commands:
+```bash
+sam build
+sam deploy --guided
+```
+
 
 ## Improvements / Remaining Work
 
