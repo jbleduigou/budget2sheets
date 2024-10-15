@@ -6,7 +6,7 @@ require (
 	github.com/aws/aws-lambda-go v1.47.0
 	github.com/aws/aws-sdk-go-v2 v1.32.2
 	github.com/aws/aws-sdk-go-v2/config v1.27.43
-	github.com/aws/aws-sdk-go-v2/service/secretsmanager v1.33.4
+	github.com/aws/aws-sdk-go-v2/service/secretsmanager v1.34.2
 	github.com/aws/smithy-go v1.22.0
 	github.com/jbleduigou/slog-aws-lambda v0.3.0
 	github.com/stretchr/testify v1.9.0
