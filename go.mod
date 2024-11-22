@@ -12,7 +12,7 @@ require (
 	github.com/stretchr/testify v1.9.0
 	golang.org/x/net v0.31.0
 	golang.org/x/oauth2 v0.24.0
-	google.golang.org/api v0.207.0
+	google.golang.org/api v0.209.0
 )
 
 require (
