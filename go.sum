@@ -55,8 +55,8 @@ github.com/googleapis/enterprise-certificate-proxy v0.3.4 h1:XYIDZApgAnrN1c855gT
 github.com/googleapis/enterprise-certificate-proxy v0.3.4/go.mod h1:YKe7cfqYXjKGpGvmSg28/fFvhNzinZQm8DGnaburhGA=
 github.com/googleapis/gax-go/v2 v2.14.1 h1:hb0FFeiPaQskmvakKu5EbCbpntQn48jyHuvrkurSS/Q=
 github.com/googleapis/gax-go/v2 v2.14.1/go.mod h1:Hb/NubMaVM88SrNkvl8X/o8XWwDJEPqouaLeN2IUxoA=
-github.com/jbleduigou/slog-aws-lambda v0.3.0 h1:mHuXXx+xcpQA+uvAYl9ezk8Ljq5cRrkAtOl0TCECWMU=
-github.com/jbleduigou/slog-aws-lambda v0.3.0/go.mod h1:uOeDST+OtLcEuWY8tuAcbTmvjDJ52ozrAacD5lww04s=
+github.com/jbleduigou/slog-aws-lambda v0.4.0 h1:TQ9XQ2I+ZxLJJxJmbJlYKjuinuUVH0CCq6Z4MwnCoY0=
+github.com/jbleduigou/slog-aws-lambda v0.4.0/go.mod h1:36+cZUwl84m2e0gxg/a0nxW//cuyYFTatsu/hIFgAqw=
 github.com/kr/pretty v0.3.1 h1:flRD4NNwYAUpkphVc1HcthR4KEIFJ65n8Mw5qdRn3LE=
 github.com/kr/pretty v0.3.1/go.mod h1:hoEshYVHaxMs3cyo3Yncou5ZscifuDolrwPKZanG3xk=
 github.com/kr/text v0.2.0 h1:5Nx0Ya0ZqY2ygV366QzturHI13Jq95ApcVaJBhpS+AY=
