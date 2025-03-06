@@ -11,7 +11,7 @@ require (
 	github.com/jbleduigou/slog-aws-lambda v0.4.0
 	github.com/stretchr/testify v1.10.0
 	golang.org/x/net v0.36.0
-	golang.org/x/oauth2 v0.27.0
+	golang.org/x/oauth2 v0.28.0
 	google.golang.org/api v0.223.0
 )
 
