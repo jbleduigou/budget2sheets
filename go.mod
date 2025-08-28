@@ -9,7 +9,7 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/secretsmanager v1.37.0
 	github.com/aws/smithy-go v1.22.5
 	github.com/jbleduigou/slog-aws-lambda v0.4.0
-	github.com/stretchr/testify v1.10.0
+	github.com/stretchr/testify v1.11.1
 	golang.org/x/net v0.43.0
 	golang.org/x/oauth2 v0.30.0
 	google.golang.org/api v0.246.0
