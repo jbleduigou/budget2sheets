@@ -24,12 +24,10 @@ type sheetsWriter struct {
 }
 
 func (w *sheetsWriter) Write(t budget.Transaction, messageId string) error {
-	slog.Info("Processing SQS message",
-		slog.String("message-id", messageId))
+	slog.Info("Writing transaction to Google Sheets", slog.String("date", t.Date), slog.Float64("amount", t.Value))
 	vr, _ := asValueRange(t)
 	_, err := w.srv.Spreadsheets.Values.Append(w.spreadSheetID, w.writeRange, &vr).ValueInputOption("USER_ENTERED").InsertDataOption("INSERT_ROWS").Do()
-	slog.Info("Successfully processed SQS message",
-		slog.String("message-id", messageId))
+	slog.Info("Successfully wrote transaction to Google Sheets", slog.String("date", t.Date), slog.Float64("amount", t.Value))
 	return err
 }
 
