@@ -1,6 +1,7 @@
 package config
 
 import (
+	"context"
 	"fmt"
 	"os"
 	"testing"
@@ -10,9 +11,7 @@ import (
 	"github.com/aws/smithy-go/middleware"
 	"github.com/jbleduigou/budget2sheets/mock"
 	"github.com/stretchr/testify/assert"
-	"golang.org/x/net/context"
 )
-
 
 func Test_retrieveCredentialsFromSecret(t *testing.T) {
 	ctx := context.Background()

@@ -1,6 +1,7 @@
 package config
 
 import (
+	"context"
 	"log/slog"
 	"os"
 
@@ -8,7 +9,6 @@ import (
 	"github.com/aws/aws-sdk-go-v2/config"
 	"github.com/aws/aws-sdk-go-v2/service/secretsmanager"
 	"github.com/jbleduigou/budget2sheets/iface"
-	"golang.org/x/net/context"
 )
 
 // Configuration provides and interface for the configuration of the software
