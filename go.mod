@@ -1,8 +1,6 @@
 module github.com/jbleduigou/budget2sheets
 
-go 1.24.0
-
-toolchain go1.24.5
+go 1.25.0
 
 require (
 	github.com/aws/aws-lambda-go v1.54.0
@@ -12,7 +10,7 @@ require (
 	github.com/aws/smithy-go v1.25.1
 	github.com/jbleduigou/slog-aws-lambda v0.4.0
 	github.com/stretchr/testify v1.11.1
-	golang.org/x/oauth2 v0.34.0
+	golang.org/x/oauth2 v0.36.0
 	google.golang.org/api v0.263.0
 )
 
