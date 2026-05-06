@@ -6,10 +6,10 @@ toolchain go1.24.5
 
 require (
 	github.com/aws/aws-lambda-go v1.54.0
-	github.com/aws/aws-sdk-go-v2 v1.41.1
+	github.com/aws/aws-sdk-go-v2 v1.41.7
 	github.com/aws/aws-sdk-go-v2/config v1.32.7
 	github.com/aws/aws-sdk-go-v2/service/secretsmanager v1.41.1
-	github.com/aws/smithy-go v1.24.0
+	github.com/aws/smithy-go v1.25.1
 	github.com/jbleduigou/slog-aws-lambda v0.4.0
 	github.com/stretchr/testify v1.11.1
 	golang.org/x/oauth2 v0.34.0
