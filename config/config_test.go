@@ -15,7 +15,10 @@ import (
 
 func Test_retrieveCredentialsFromSecret(t *testing.T) {
 	ctx := context.Background()
-	os.Setenv("GOOGLE_CREDENTIALS_SECRET_ARN", "arn:aws:secretsmanager:us-east-1:123456789012:secret:budget2sheets/test")
+	err := os.Setenv("GOOGLE_CREDENTIALS_SECRET_ARN", "arn:aws:secretsmanager:us-east-1:123456789012:secret:budget2sheets/test")
+	if err != nil {
+		t.Errorf("could not set environment variable in unit test: %s", err.Error())
+	}
 	tests := []struct {
 		name       string
 		setupMocks func(m *mock.MockedSecretsManager)
