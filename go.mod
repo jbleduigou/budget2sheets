@@ -10,8 +10,8 @@ require (
 	github.com/aws/smithy-go v1.28.8
 	github.com/jbleduigou/slog-aws-lambda v0.4.0
 	github.com/stretchr/testify v1.12.1
-	golang.org/x/oauth2 v0.37.0
-	google.golang.org/api v0.311.0
+	golang.org/x/oauth2 v0.38.0
+	google.golang.org/api v0.314.0
 )
 
 require (
